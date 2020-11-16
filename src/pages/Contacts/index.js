@@ -1,34 +1,11 @@
-import { useState, useEffect } from "react";
-const useContacts = () => {
-  const [data, setData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isError, setIsError] = useState(false);
-  useEffect(() => {
-    const getContacts = async () => {
-      try {
-        setIsLoading(true);
-        const response = await fetch("https://randomuser.me/api/?results=100");
-        const { results, error } = await response.json();
-        if (error) throw Error("No data");
-        console.log(results);
-        setData(results);
-        setIsError(false);
-      } catch (e) {
-        console.error(e);
-        setIsError(true);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    getContacts();
-  }, []);
-  return {
-    isLoading,
-    isError,
-    data,
-  };
-};
+import { useStyles } from "./styles";
+import { useContacts } from "./useContacts";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import Container from "@material-ui/core/Container";
+
 export function Contacts() {
+  const classes = useStyles();
   const contacts = useContacts();
   if (contacts.isLoading) {
     return <div> ....Loading </div>;
@@ -37,9 +14,19 @@ export function Contacts() {
     return <div> ...Error </div>;
   }
   return (
-    <div className="contacts">
-      {" "}
-      {JSON.stringify(contacts.data[0].name.first)}{" "}
-    </div>
+    <Container className={classes.root}>
+      <Grid container spacing={3}>
+        <Typography
+          variant="h3"
+          component="h1"
+          className={classes.headContainer}
+        >
+          Contacts
+        </Typography>
+        <Grid item xs={12}>
+          {contacts.data.length}
+        </Grid>
+      </Grid>
+    </Container>
   );
 }
