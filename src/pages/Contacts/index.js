@@ -1,5 +1,6 @@
 import { useStyles } from "./styles";
 import { useContacts } from "./useContacts";
+import { ContactsTable } from "../ContactsTable";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
@@ -7,12 +8,7 @@ import Container from "@material-ui/core/Container";
 export function Contacts() {
   const classes = useStyles();
   const contacts = useContacts();
-  if (contacts.isLoading) {
-    return <div> ....Loading </div>;
-  }
-  if (contacts.isError) {
-    return <div> ...Error </div>;
-  }
+
   return (
     <Container className={classes.root}>
       <Grid container spacing={3}>
@@ -23,8 +19,17 @@ export function Contacts() {
         >
           Contacts
         </Typography>
+
         <Grid item xs={12}>
-          {contacts.data.length}
+          {(() => {
+            if (contacts.isLoading) {
+              return <div> ....Loading </div>;
+            }
+            if (contacts.isError) {
+              return <div> ...Error </div>;
+            }
+            return <ContactsTable data={contacts.data} />;
+          })()}
         </Grid>
       </Grid>
     </Container>
