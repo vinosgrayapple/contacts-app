@@ -1,6 +1,6 @@
 import { useStyles } from "./styles";
 import { useContacts } from "./useContacts";
-import { ContactsTable } from "../ContactsTable";
+import { ContactsTable } from "./ContactsTable";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
