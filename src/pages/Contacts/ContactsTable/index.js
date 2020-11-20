@@ -7,13 +7,11 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import Avatar from "@material-ui/core/Avatar";
-// import copy from 'clipboard-copy'
-import { CopyToClipboardText } from "../../../components/CopyToClipboard";
-// import { FileCopy } from '@material-ui/icons'
-
-import { format, formatDistance } from "date-fns";
 import Typography from "@material-ui/core/Typography";
+import Avatar from "@material-ui/core/Avatar";
+import { CopyToClipboardText } from "../../../components/CopyToClipboard";
+import { format, formatDistance } from "date-fns";
+import { NATIONALITY_HUMAN_NAME } from "../../../constants/nationality";
 // import { CopyToClipboard } from 'react-copy-to-clipboard'
 const useStyles = makeStyles({
   table: {
@@ -23,8 +21,6 @@ const useStyles = makeStyles({
 export const ContactsTable = ({ data }) => {
   const classes = useStyles();
   const fullName = ({ first, last }) => `${first} ${last}`;
-  // const [ value, setValue ] = useState('')
-  // const [ isCopied, setIsCopied ] = useState(false)
   return (
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="simple table">
@@ -47,33 +43,33 @@ export const ContactsTable = ({ data }) => {
               </TableCell>
               <TableCell scope="contact">{fullName(contact.name)}</TableCell>
               <TableCell>
-                <Typography>
+                <Typography variant="body2">
                   {format(new Date(contact.dob.date), "dd/MM/yyyy")}
                 </Typography>
-                <Typography>
+                <Typography variant="caption">
                   {formatDistance(new Date(contact.dob.date), new Date())}
                 </Typography>
               </TableCell>
               <TableCell>
                 <CopyToClipboardText text={contact.email} />
-                {/* <CopyToClipboard text={value} onCopy={() => setIsCopied(true)}>
-									<Link
-										component="button"
-										variant="body2"
-										onClick={() => {
-											copy("I'm a button.")
-										}}
-									>
-										<FileCopy color="primary" />
-									</Link>
-								</CopyToClipboard> */}
               </TableCell>
-
               <TableCell>
                 <CopyToClipboardText text={contact.phone} />
               </TableCell>
-              <TableCell>{contact.email}</TableCell>
-              <TableCell>{contact.location.country}</TableCell>
+              <TableCell>
+                <Typography variant="subtitle1">
+                  {contact.location.country}
+                </Typography>
+                <Typography variant="caption">
+                  {contact.location.city}, {contact.location.street.name},{" "}
+                  {contact.location.street.number}
+                </Typography>
+              </TableCell>
+              <TableCell>
+                <Typography variant="body1">
+                  {NATIONALITY_HUMAN_NAME[contact.nat]}
+                </Typography>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
