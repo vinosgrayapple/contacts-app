@@ -8,7 +8,7 @@ export const useContacts = () => {
     const getContacts = async () => {
       try {
         setIsLoading(true);
-        const response = await fetch("https://randomuser.me/api/?results=100");
+        const response = await fetch("https://randomuser.me/api/?results=20");
         const { results, error } = await response.json();
         if (error) throw Error("No data");
         console.log(results);
