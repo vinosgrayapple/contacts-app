@@ -1,4 +1,4 @@
-import React /* , { useState } */ from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -12,7 +12,6 @@ import Avatar from "@material-ui/core/Avatar";
 import { CopyToClipboardText } from "../../../components/CopyToClipboard";
 import { format, formatDistance } from "date-fns";
 import { NATIONALITY_HUMAN_NAME } from "../../../constants/nationality";
-// import { CopyToClipboard } from 'react-copy-to-clipboard'
 const useStyles = makeStyles({
   table: {
     minWidth: 650,
@@ -39,12 +38,15 @@ export const ContactsTable = ({ data }) => {
           {data.map((contact) => (
             <TableRow key={contact.login.sha256}>
               <TableCell component="th" scope="contact">
-                <Avatar alt="Remy Sharp" src={contact.picture.thumbnail} />
+                <Avatar
+                  alt={fullName(contact.name)}
+                  src={contact.picture.thumbnail}
+                />
               </TableCell>
               <TableCell scope="contact">{fullName(contact.name)}</TableCell>
               <TableCell>
                 <Typography variant="body2">
-                  {format(new Date(contact.dob.date), "dd/MM/yyyy")}
+                  {format(new Date(contact.dob.date), "dd.MM.yyyy")}
                 </Typography>
                 <Typography variant="caption">
                   {formatDistance(new Date(contact.dob.date), new Date())}
